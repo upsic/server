@@ -3,7 +3,7 @@ const env = require('dotenv').config(),
     genius = new api(process.env.GENIUS_CLIENT_ACCESS_TOKEN),
     Music = require('../models/music')
 
-class Music {
+class MusicController {
 
     static searchSong(req, res) {
         // console.log(req.query)
@@ -120,4 +120,4 @@ class Music {
 
 }
 
-module.exports = Music
+module.exports = MusicController
