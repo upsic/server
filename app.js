@@ -14,7 +14,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-// app.use('/', routes)
+app.use('/upsic', routes)
 app.use('/music', musicRoute)
 
 app.listen(port, () => {
