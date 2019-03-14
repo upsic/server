@@ -9,6 +9,7 @@ const musicSchema = new Schema({
         type : String,
         default : `https://iweek.org.za/wp-content/uploads/2015/09/no-profile-photo1.jpg`
     },
+    lyric : String,
     user : {
         type: Schema.Types.ObjectId,
         ref : `User`
