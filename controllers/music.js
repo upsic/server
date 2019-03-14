@@ -1,5 +1,5 @@
 const Music = require('../models/music')
-const { getImage } = require('../helpers/getImage')
+// const { getImage } = require('../helpers/getImage')
 
 module.exports = {
 
@@ -24,20 +24,26 @@ module.exports = {
   },
 
   create: (req, res) => {
-    getImage(req.body.title)
-      .then(data => {
+    // getImage(req.body.title)
+    //   .then(data => {
         
-        let input = {
-          title: req.body.title,
-          artist: req.body.artist,
-          url: req.file.cloudStoragePublicUrl,
-          img_url: data,
-          user: req.user._id
-        }
+    //     let input = {
+    //       title: req.body.title,
+    //       artist: req.body.artist,
+    //       url: req.file.cloudStoragePublicUrl,
+    //     //   user: req.user._id
+    //     }
 
-        return Music
-          .create(input)
-      })
+    //     return Music
+    //       .create(input)
+    //   })
+      let input = {
+        title: req.body.title,
+        artist: req.body.artist,
+        url: req.file.cloudStoragePublicUrl,
+      //   user: req.user._id
+      }
+      Music.create(input)
       .then(music => {
         res.status(201).json(music)
       })
