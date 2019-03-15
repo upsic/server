@@ -4,9 +4,10 @@ module.exports = function (req, res, next) {
     if(req.headers.hasOwnProperty('access_token')) {
         try {
             const decoded = jwt.verify(req.headers.access_token)
-            req.headers = { ...decoded }
+            req.authUser = { ...decoded }
             next()
         } catch(err) {
+            console.log(err)
             res.status(400).json({
                 message: 'Bad request'
             })

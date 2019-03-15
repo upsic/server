@@ -3,10 +3,11 @@ const router = require('express').Router()
 // const isOwner = require('../middlewares/isOwner')
 const image = require('../helpers/images')
 const MusicController = require('../controllers/music')
+const Auth = require('../middlewares/authentication')
 
 router.get('/', MusicController.all)
 // router.use(isLogin)
-router.post('/', image.multer.single('music'), image.sendUploadToGCS, MusicController.create )
+router.post('/', Auth, image.multer.single('music'), image.sendUploadToGCS, MusicController.create)
 
 // router.use(isOwner)
 router.delete('/:id', MusicController.delete)
