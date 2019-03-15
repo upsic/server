@@ -22,7 +22,8 @@ class UserController {
         .then(result => {
             if(result && bcrypt.compare(req.body.password, result.password)) {
                 const payload = {
-                    email: result.email
+                    email: result.email,
+                    id: result._id
                 }
                 const access_token = jwt.sign(payload)
                 res.status(200).json({

@@ -1,7 +1,8 @@
 const env = require('dotenv').config(),
     api = require('genius-api'),
     genius = new api(process.env.GENIUS_CLIENT_ACCESS_TOKEN),
-    Music = require('../models/music')
+    Music = require('../models/music'),
+    User = require('../models/user')
 
 class MusicController {
 
@@ -64,13 +65,15 @@ class MusicController {
             title: req.body.title,
             artist: req.body.artist,
             url: req.file.cloudStoragePublicUrl,
-            //   user: req.user._id
+            user: req.authUser.id
         }
         Music.create(input)
             .then(music => {
+                // User
                 res.status(201).json(music)
             })
             .catch(err => {
+                console.log(err)
                 res.status(500).json({
                     msg: 'Internal Server Error',
                     Error: err
