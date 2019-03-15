@@ -5,7 +5,7 @@ const image = require('../helpers/images')
 const MusicController = require('../controllers/music')
 const Auth = require('../middlewares/authentication')
 
-router.get('/', MusicController.all)
+router.get('/', Auth, MusicController.all)
 // router.use(isLogin)
 router.post('/', Auth, image.multer.single('music'), image.sendUploadToGCS, MusicController.create)
 
