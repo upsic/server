@@ -29,7 +29,7 @@ class MusicController {
 
     static all(req, res) {
         Music
-            .find({})
+            .find({ user: req.authUser.id })
             .then(musics => {
                 // if (!musics.length) {
                 //   res.status(404).json({
@@ -37,7 +37,7 @@ class MusicController {
                 //   })
                 // } else {
                 res.status(200).json(musics)
-                    // }
+                // }
             })
             .catch(err => {
                 console.log(err)
@@ -48,6 +48,31 @@ class MusicController {
     }
 
     static create(req, res) {
+        genius.search(req.body.title)
+            .then(data => {
+                // console.log(data)
+                let dataImage = data.hits[0].result.header_image_thumbnail_url
+                let input = {
+                    title: req.body.title,
+                    artist: req.body.artist,
+                    url: req.file.cloudStoragePublicUrl,
+                    user: req.authUser.id,
+                    img_url: dataImage
+                }
+                return Music
+                    .create(input)
+            })
+            .then(music => {
+                // User
+                res.status(201).json(music)
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({
+                    msg: 'Internal Server Error',
+                    Error: err
+                })
+            })
         // getImage(req.body.title)
         //   .then(data => {
 
@@ -61,24 +86,24 @@ class MusicController {
         //     return Music
         //       .create(input)
         //   })
-        let input = {
-            title: req.body.title,
-            artist: req.body.artist,
-            url: req.file.cloudStoragePublicUrl,
-            user: req.authUser.id
-        }
-        Music.create(input)
-            .then(music => {
-                // User
-                res.status(201).json(music)
-            })
-            .catch(err => {
-                console.log(err)
-                res.status(500).json({
-                    msg: 'Internal Server Error',
-                    Error: err
-                })
-            })
+        // let input = {
+        //     title: req.body.title,
+        //     artist: req.body.artist,
+        //     url: req.file.cloudStoragePublicUrl,
+        //     user: req.authUser.id
+        // }
+        // Music.create(input)
+        //     .then(music => {
+        //         // User
+        //         res.status(201).json(music)
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //         res.status(500).json({
+        //             msg: 'Internal Server Error',
+        //             Error: err
+        //         })
+        //     })
 
     }
 
